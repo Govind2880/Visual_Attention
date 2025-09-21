@@ -2,90 +2,51 @@ import torch
 import numpy as np
 
 def get_content_attention_scores(attentions):
-    """
-    Extract attention scores focusing on content tokens, not special tokens.
-    
-    This addresses the issue where [CLS] and [SEP] tokens dominate attention
-    by looking at token-to-token attention within the content.
-    """
+    """Extract meaningful attention scores, excluding special tokens."""
     if not attentions:
         return np.array([])
     
     try:
-        # Use the last few layers which tend to have more semantic attention
-        layer_attentions = []
+        # Use last 2 layers for semantic attention
+        layer_scores = []
         
-        for layer_attention in attentions[-2:]:  # Last 2 layers
-            # Shape: [batch, heads, seq_len, seq_len]
-            batch_attention = layer_attention[0]  # [heads, seq_len, seq_len]
+        for layer_attention in attentions[-2:]:
+            batch_attention = layer_attention[0]  # Remove batch dimension
+            avg_heads = batch_attention.mean(dim=0)  # Average across heads
             
-            # Average across attention heads
-            avg_heads = batch_attention.mean(dim=0)  # [seq_len, seq_len]
-            
-            # Method 1: Look at how content tokens attend to each other
-            # Exclude first token ([CLS]) and last token ([SEP])
+            # Get content-to-content attention (exclude CLS and SEP)
             if avg_heads.size(0) > 2:
-                content_region = avg_heads[1:-1, 1:-1]  # Content tokens only
+                content_attention = avg_heads[1:-1, 1:-1]  # Remove first/last tokens
                 
-                # For each content token, see how much attention it receives from others
-                if content_region.size(0) > 0:
-                    # Average attention each token receives (incoming attention)
-                    token_importance = content_region.mean(dim=0)
-                    layer_attentions.append(token_importance)
+                if content_attention.size(0) > 0:
+                    token_scores = content_attention.mean(dim=0)
+                    layer_scores.append(token_scores)
         
-        if layer_attentions:
-            # Average across layers
-            final_scores = torch.stack(layer_attentions).mean(dim=0)
-            
-            # Normalize to [0, 1]
+        if layer_scores:
+            final_scores = torch.stack(layer_scores).mean(dim=0)
             scores_np = final_scores.detach().cpu().numpy()
-            if scores_np.max() > 0:
-                scores_np = scores_np / scores_np.max()
+            
+            # Normalize to [0, 1] for better colors
+            if scores_np.max() > scores_np.min():
+                scores_np = (scores_np - scores_np.min()) / (scores_np.max() - scores_np.min())
             
             return scores_np
-        
-    except Exception as e:
-        print(f"Error in content attention extraction: {e}")
-    
-    # Fallback: use traditional method but still exclude special tokens
-    try:
-        last_layer = attentions[-1][0]  # [heads, seq_len, seq_len]
-        cls_attention = last_layer[:, 0, :].mean(dim=0)  # CLS attention, averaged across heads
-        
-        # Remove the CLS and SEP attention scores (first and last)
-        if len(cls_attention) > 2:
-            content_scores = cls_attention[1:-1]  # Exclude first ([CLS]) and last ([SEP])
             
-            # Normalize
-            scores_np = content_scores.detach().cpu().numpy()
-            if scores_np.max() > 0:
-                scores_np = scores_np / scores_np.max()
-            
-            return scores_np
-        
     except Exception as e:
-        print(f"Error in fallback attention: {e}")
+        print(f"Error in attention extraction: {e}")
+        return np.array([])
     
     return np.array([])
 
-def clean_tokens_and_scores(tokens, scores):
-    """
-    Clean tokens by removing special tokens and combining subwords.
-    
-    Args:
-        tokens: List of all tokens from tokenizer
-        scores: Attention scores (should match content tokens only)
-    
-    Returns:
-        Tuple of (cleaned_tokens, cleaned_scores)
-    """
-    # Remove special tokens from the beginning and end
-    if len(tokens) > 2 and tokens[0] in ['[CLS]', '<s>'] and tokens[-1] in ['[SEP]', '</s>']:
+def process_tokens_and_scores(tokens, scores):
+    """Clean tokens and combine subwords."""
+    # Remove special tokens
+    if len(tokens) > 2 and tokens[0] == '[CLS]' and tokens[-1] == '[SEP]':
         content_tokens = tokens[1:-1]
     else:
-        content_tokens = [t for t in tokens if t not in ['[CLS]', '[SEP]', '[PAD]', '[UNK]', '<s>', '</s>']]
+        content_tokens = [t for t in tokens if t not in ['[CLS]', '[SEP]', '[PAD]', '[UNK]']]
     
-    # Ensure we have matching lengths
+    # Match lengths
     min_len = min(len(content_tokens), len(scores))
     content_tokens = content_tokens[:min_len]
     scores = scores[:min_len] if len(scores) > 0 else np.zeros(min_len)
@@ -94,169 +55,83 @@ def clean_tokens_and_scores(tokens, scores):
     combined_tokens = []
     combined_scores = []
     current_word = ""
-    current_score = 0
+    current_max_score = 0
     
-    for i, (token, score) in enumerate(zip(content_tokens, scores)):
+    for token, score in zip(content_tokens, scores):
         clean_token = token.replace('##', '')
         
         if token.startswith('##'):
-            # This is a subword continuation
             current_word += clean_token
-            current_score = max(current_score, score)  # Take the max score for the word
+            current_max_score = max(current_max_score, score)
         else:
-            # This is a new word
-            if current_word:  # Save the previous word
+            if current_word:
                 combined_tokens.append(current_word)
-                combined_scores.append(current_score)
-            
+                combined_scores.append(current_max_score)
             current_word = clean_token
-            current_score = score
+            current_max_score = score
     
-    # Don't forget the last word
     if current_word:
         combined_tokens.append(current_word)
-        combined_scores.append(current_score)
+        combined_scores.append(current_max_score)
     
     return combined_tokens, np.array(combined_scores)
 
-def get_attention_color(score, enhanced=True):
-    """
-    Get color for attention visualization based on score.
-    
-    Args:
-        score: Attention score between 0 and 1
-        enhanced: Whether to use enhanced color scheme
-    
-    Returns:
-        CSS color string and additional styling
-    """
-    if not enhanced:
-        return f"rgba(255, 0, 0, {score:.2f})", ""
-    
-    # Enhanced color scheme with better visual distinction
-    if score > 0.8:
-        color = "rgba(220, 38, 38, 0.9)"  # Dark red
-        extra_style = "font-weight: 600; border: 2px solid rgba(185, 28, 28, 0.8);"
-    elif score > 0.6:
-        color = "rgba(239, 68, 68, 0.8)"  # Red
-        extra_style = "font-weight: 500; border: 1px solid rgba(220, 38, 38, 0.6);"
-    elif score > 0.4:
-        color = "rgba(248, 113, 113, 0.7)"  # Light red
-        extra_style = "border: 1px solid rgba(239, 68, 68, 0.5);"
-    elif score > 0.2:
-        color = "rgba(252, 165, 165, 0.6)"  # Very light red
-        extra_style = "border: 1px solid rgba(248, 113, 113, 0.4);"
-    else:
-        color = "rgba(254, 202, 202, 0.4)"  # Barely visible
-        extra_style = ""
-    
-    return color, extra_style
-
-def render_attention(tokens, scores, threshold=0.05):
-    """
-    Render attention visualization with improved handling of special tokens.
-    
-    Args:
-        tokens: Cleaned tokens (no special tokens)
-        scores: Attention scores matching the tokens
-        threshold: Minimum score to apply highlighting
-    
-    Returns:
-        HTML string with attention visualization
-    """
+def create_attention_html(tokens, scores, min_score=0.1):
+    """Create HTML with visible colors."""
     if len(tokens) == 0:
-        return "<span>No tokens to visualize</span>"
+        return "<span>No tokens to display</span>"
     
     html_parts = []
     
     for token, score in zip(tokens, scores):
-        if not token.strip():  # Skip empty tokens
+        if not token.strip():
             continue
         
-        # Get color and styling
-        color, extra_style = get_attention_color(max(score, threshold), enhanced=True)
+        # Ensure minimum visibility
+        display_score = max(score, min_score)
         
-        # Create HTML element
+        # Better color scheme with higher opacity
+        if display_score > 0.7:
+            color = "rgba(220, 38, 38, 0.9)"  # Dark red
+            border = "2px solid rgba(185, 28, 28, 1)"
+        elif display_score > 0.5:
+            color = "rgba(248, 113, 113, 0.8)"  # Medium red  
+            border = "1px solid rgba(220, 38, 38, 0.8)"
+        elif display_score > 0.3:
+            color = "rgba(252, 165, 165, 0.7)"  # Light red
+            border = "1px solid rgba(248, 113, 113, 0.6)"
+        else:
+            color = "rgba(254, 202, 202, 0.6)"  # Very light red
+            border = "1px solid rgba(252, 165, 165, 0.4)"
+        
         html_parts.append(
             f'<span class="attention-word" '
             f'style="background-color: {color}; '
-            f'padding: 4px 8px; margin: 2px; '
-            f'border-radius: 6px; '
-            f'display: inline-block; '
-            f'transition: all 0.3s ease; '
-            f'cursor: pointer; '
-            f'{extra_style}" '
-            f'title="Token: {token}\nAttention Score: {score:.3f}" '
-            f'onmouseover="this.style.transform='translateY(-2px)'; '
-            f'this.style.boxShadow='0 4px 12px rgba(0,0,0,0.2)';" '
-            f'onmouseout="this.style.transform='translateY(0px)'; '
-            f'this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)';">'
-            f'{token}</span>'
+            f'border: {border}; '
+            f'padding: 4px 8px; margin: 2px; border-radius: 4px; '
+            f'display: inline-block;" '
+            f'title="Score: {score:.3f}">{token}</span>'
         )
     
     return ' '.join(html_parts)
 
 def show_attention(text, tokenizer, attentions, inputs):
-    """
-    Main function to show attention visualization with improved special token handling.
-    
-    This version addresses the issue where [CLS] and [SEP] tokens dominate
-    the attention visualization by focusing on content-to-content attention.
-    """
+    """Main attention visualization function."""
     try:
-        # Get all tokens
         all_tokens = tokenizer.convert_ids_to_tokens(inputs["input_ids"][0])
-        
-        # Get content-focused attention scores
         attention_scores = get_content_attention_scores(attentions)
         
         if len(attention_scores) == 0:
-            return f"<span>Unable to compute attention for: {text}</span>"
+            return f"<span>No attention data for: {text}</span>"
         
-        # Clean tokens and match with scores
-        clean_tokens, clean_scores = clean_tokens_and_scores(all_tokens, attention_scores)
+        clean_tokens, clean_scores = process_tokens_and_scores(all_tokens, attention_scores)
         
         if len(clean_tokens) == 0:
-            return f"<span>No content tokens found in: {text}</span>"
+            return f"<span>No content tokens found</span>"
         
-        # Render the visualization
-        html_output = render_attention(clean_tokens, clean_scores, threshold=0.1)
-        
+        html_output = create_attention_html(clean_tokens, clean_scores)
         return html_output
         
     except Exception as e:
         print(f"Error in attention visualization: {e}")
-        import traceback
-        traceback.print_exc()
-        return f"<span style='color: red;'>Error processing attention for: {text}</span>"
-
-def get_attention_stats(attentions):
-    """
-    Get statistics about attention distribution (excluding special tokens).
-    
-    Returns:
-        Dictionary with attention statistics
-    """
-    try:
-        attention_scores = get_content_attention_scores(attentions)
-        if len(attention_scores) == 0:
-            return {}
-        
-        return {
-            'mean': float(attention_scores.mean()),
-            'std': float(attention_scores.std()),
-            'min': float(attention_scores.min()),
-            'max': float(attention_scores.max()),
-            'num_tokens': len(attention_scores),
-            'high_attention_tokens': int((attention_scores > 0.7).sum()),
-            'medium_attention_tokens': int(((attention_scores > 0.4) & (attention_scores <= 0.7)).sum()),
-            'low_attention_tokens': int((attention_scores <= 0.4).sum())
-        }
-    except Exception as e:
-        print(f"Error computing attention stats: {e}")
-        return {}
-
-# Legacy function for backward compatibility
-def aggregate_attention(attentions):
-    """Legacy function - redirects to new implementation."""
-    return get_content_attention_scores(attentions)
+        return f"<span style='color: red;'>Error: {str(e)}</span>"

@@ -379,55 +379,49 @@
     });
 
     // Enhanced Chart
-    {% if success and probabilities %}
-    const ctx = document.getElementById('sentimentChart').getContext('2d');
-    const gradient1 = ctx.createLinearGradient(0, 0, 0, 200);
-    gradient1.addColorStop(0, '#10b981');
-    gradient1.addColorStop(1, '#059669');
-    
-    const gradient2 = ctx.createLinearGradient(0, 0, 0, 200);
-    gradient2.addColorStop(0, '#ef4444');
-    gradient2.addColorStop(1, '#dc2626');
-    
-    new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: [{% for item in probabilities %}'{{ item.label }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
-        datasets: [{
-          data: [{% for item in probabilities %}{{ item.probability|floatformat:1 }}{% if not forloop.last %}, {% endif %}{% endfor %}],
-          backgroundColor: [gradient2, gradient1],
-          borderWidth: 0,
-          hoverBorderWidth: 4,
-          hoverBorderColor: '#fff'
-        }]
+    // Enhanced Chart - Fixed Template Syntax
+{% if success and probabilities %}
+const ctx = document.getElementById('sentimentChart').getContext('2d');
+
+// Create chart data
+const chartLabels = [{% for item in probabilities %}'{{ item.label }}'{% if not forloop.last %}, {% endif %}{% endfor %}];
+const chartData = [{% for item in probabilities %}{{ item.probability|floatformat:1 }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+
+new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: chartLabels,
+    datasets: [{
+      data: chartData,
+      backgroundColor: ['#ef4444', '#10b981'],
+      borderWidth: 2,
+      borderColor: '#fff'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    cutout: '60%',
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          usePointStyle: true,
+          padding: 20,
+          font: { size: 12, weight: '500' }
+        }
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        cutout: '60%',
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              usePointStyle: true,
-              padding: 20,
-              font: { size: 12, weight: '500' }
-            }
-          },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return context.label + ': ' + context.parsed.toFixed(1) + '%';
-              }
-            }
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            return context.label + ': ' + context.parsed.toFixed(1) + '%';
           }
-        },
-        animation: {
-          animateRotate: true,
-          duration: 2000
         }
       }
-    });
+    }
+  }
+});
+
     
     // Animate attention words
     setTimeout(() => {

@@ -76,7 +76,7 @@ def predict_with_attention_safe(text, model, tokenizer):
     
     return probs, attentions, inputs, processing_time
 
-def show_attention_enhanced(text, tokenizer, attentions, inputs):
+def show_attention_simple(text, tokenizer, attentions, inputs):
     """Enhanced attention visualization with better formatting."""
     try:
         from src.visualize import show_attention
@@ -207,7 +207,7 @@ def home(request):
             confidence = float(probs[0][label_idx]) * 100
             
             # Generate enhanced attention visualization
-            attention_html = show_attention_enhanced(text, tokenizer, attentions, inputs)
+            attention_html = show_attention_simple(text, tokenizer, attentions, inputs)
             
             # Update analytics
             update_analytics(CLASSES[label_idx], confidence, len(text), processing_time)
@@ -281,7 +281,7 @@ def predict_api(request):
         label_idx = np.argmax(probs[0])
         confidence = float(probs[0][label_idx])
         
-        attention_html = show_attention_enhanced(text, tokenizer, attentions, inputs)
+        attention_html = show_attention_simple(text, tokenizer, attentions, inputs)
         
         # Update analytics
         update_analytics(CLASSES[label_idx], confidence * 100, len(text), processing_time)
