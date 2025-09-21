@@ -9,5 +9,5 @@ def predict_with_attention(text):
     inputs = tokenizer(text, return_tensors="pt")
     outputs = model(**inputs)
     probs = torch.softmax(outputs.logits, dim=1).detach().numpy()
-    attentions = outputs.attentions
-    return probs, attentions, inputs, tokenizer
+    attentions = outputs.attentions  # list of attention matrices
+    return probs, attentions, inputs

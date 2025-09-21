@@ -1,0 +1,136 @@
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 2105
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2463
+Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\singo\anaconda3\envs\att_pro\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\singo\anaconda3\envs\att_pro\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py", line 13, in home
+    probs, attentions, inputs, tokenizer = predict_with_attention(text)
+ValueError: not enough values to unpack (expected 4, got 3)
+"POST / HTTP/1.1" 500 72008
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 2105
+"POST / HTTP/1.1" 200 2107
+"POST / HTTP/1.1" 200 2107
+"POST / HTTP/1.1" 200 2107
+"POST / HTTP/1.1" 200 2107
+"POST / HTTP/1.1" 200 2107
+"POST / HTTP/1.1" 200 2107
+"POST / HTTP/1.1" 200 2107
+"POST / HTTP/1.1" 200 2107
+"POST / HTTP/1.1" 200 2107
+"POST / HTTP/1.1" 200 2110
+"POST / HTTP/1.1" 200 2110
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 2105
+- Broken pipe from ('127.0.0.1', 57845)
+"POST / HTTP/1.1" 200 2836
+"POST / HTTP/1.1" 200 2996
+"POST / HTTP/1.1" 200 3266
+"POST / HTTP/1.1" 200 3266
+"POST / HTTP/1.1" 200 3266
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 2105
+"POST / HTTP/1.1" 200 2996
+"POST / HTTP/1.1" 200 3230
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 2105
+"POST / HTTP/1.1" 200 3478
+"POST / HTTP/1.1" 200 7995
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 4915
+"POST / HTTP/1.1" 200 5070
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 4915
+"POST / HTTP/1.1" 200 6832
+"POST / HTTP/1.1" 200 6813
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 4915
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2463
+"POST / HTTP/1.1" 200 12165
+"POST / HTTP/1.1" 200 7902
+"POST / HTTP/1.1" 200 7082
+"POST / HTTP/1.1" 200 7500
+"POST / HTTP/1.1" 200 7504
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 4915
+"POST / HTTP/1.1" 200 8294
+"POST / HTTP/1.1" 200 8292
+"POST / HTTP/1.1" 200 7446
+"POST / HTTP/1.1" 200 7446
+"POST / HTTP/1.1" 200 7446
+"POST / HTTP/1.1" 200 7446
+"POST / HTTP/1.1" 200 7452
+"POST / HTTP/1.1" 200 7456
+"POST / HTTP/1.1" 200 7619
+"POST / HTTP/1.1" 200 7284
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 4915
+"POST / HTTP/1.1" 200 7109
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 4915
+"POST / HTTP/1.1" 200 6334
+"POST / HTTP/1.1" 200 6428
+"POST / HTTP/1.1" 200 6428
+"POST / HTTP/1.1" 200 6758
+"POST / HTTP/1.1" 200 6758
+"POST / HTTP/1.1" 200 6936
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\attention_classifier\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\attention_classifier\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 4915
+"POST / HTTP/1.1" 200 7104
+"POST / HTTP/1.1" 200 6415
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 9310
+"POST / HTTP/1.1" 200 9594
+C:\Users\singo\OneDrive\Desktop\Attention_visualization\Visual_Attention\classifier\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 9310
+- Broken pipe from ('127.0.0.1', 51205)
+"POST / HTTP/1.1" 200 17910
+"POST / HTTP/1.1" 200 20885
+"POST / HTTP/1.1" 200 20885
+"POST / HTTP/1.1" 200 20885
+"POST / HTTP/1.1" 200 20900
