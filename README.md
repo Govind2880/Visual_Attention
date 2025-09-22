@@ -111,8 +111,8 @@ A sophisticated **AI-powered sentiment analysis web application** built with **f
 
 ```bash
 # Clone the repository
-git clone https://github.com/Govind2880/ai-sentiment-analyzer.git
-cd ai-sentiment-analyzer
+git clone https://github.com/Govind2880/Visual_Attention.git
+cd Visual_Attention
 
 # Install Git LFS and pull model files (IMPORTANT!)
 git lfs install
@@ -179,7 +179,7 @@ python manage.py runserver 8000
 ## 🔧 Project Structure
 
 ```
-ai-sentiment-analyzer/
+Visual_Attention/
 ├── 📁 attention_classifier/        # Django project configuration
 │   ├── settings.py                 # Settings with environment variables
 │   ├── urls.py                    # Main URL configuration
@@ -636,8 +636,8 @@ We welcome contributions! Here's how to get started:
 
 1. **Fork and clone:**
    ```bash
-   git clone https://github.com/Govind2880/ai-sentiment-analyzer.git
-   cd ai-sentiment-analyzer
+   git clone https://github.com/Govind2880/Visual_Attention.git
+   cd Visual_Attention
    ```
 
 2. **Create development branch:**
@@ -716,10 +716,10 @@ furnished to do so, subject to the following conditions...
 ## 📞 Contact & Links
 
 - **Author:** Govind Singh
-- **GitHub:** [Repository Link](https://github.com/Govind2880/ai-sentiment-analyzer)
+- **GitHub:** [Repository Link](https://github.com/Govind2880/Visual_Attention)
 - **Live Demo:** [AWS Elastic Beanstalk](http://visual-attention-app-env.eba-jjsphpfx.us-east-1.elasticbeanstalk.com)
-- **Issues:** [GitHub Issues](https://github.com/Govind2880/ai-sentiment-analyzer/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/Govind2880/ai-sentiment-analyzer/discussions)
+- **Issues:** [GitHub Issues](https://github.com/Govind2880/Visual_Attention/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/Govind2880/Visual_Attention/discussions)
 
 ---
 
@@ -727,10 +727,10 @@ furnished to do so, subject to the following conditions...
 
 ### ⭐ If this project helped you, please give it a star!
 
-[![GitHub stars](https://img.shields.io/github/stars/Govind2880/ai-sentiment-analyzer?style=social)](https://github.com/Govind2880/ai-sentiment-analyzer/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/Govind2880/ai-sentiment-analyzer?style=social)](https://github.com/Govind2880/ai-sentiment-analyzer/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/Govind2880/ai-sentiment-analyzer)](https://github.com/Govind2880/ai-sentiment-analyzer/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/Govind2880/ai-sentiment-analyzer)](https://github.com/Govind2880/ai-sentiment-analyzer/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/Govind2880/Visual_Attention?style=social)](https://github.com/Govind2880/Visual_Attention/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Govind2880/Visual_Attention?style=social)](https://github.com/Govind2880/Visual_Attention/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/Govind2880/Visual_Attention)](https://github.com/Govind2880/Visual_Attention/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/Govind2880/Visual_Attention)](https://github.com/Govind2880/Visual_Attention/pulls)
 
 **Built with ❤️ using AI, Django, and Modern Web Technologies**
 
