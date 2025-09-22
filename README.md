@@ -719,8 +719,6 @@ furnished to do so, subject to the following conditions...
 - **GitHub:** [Repository Link](https://github.com/Govind2880/Visual_Attention)
 - **Live Demo:** [AWS Elastic Beanstalk](http://visual-attention-app-env.eba-jjsphpfx.us-east-1.elasticbeanstalk.com)
 - **Issues:** [GitHub Issues](https://github.com/Govind2880/Visual_Attention/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/Govind2880/Visual_Attention/discussions)
-
 ---
 
 <div align="center">
