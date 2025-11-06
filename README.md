@@ -1,16 +1,11 @@
 # 🧠 AI Text Sentiment Analyzer
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-AWS%20EB-orange?style=for-the-badge)](http://visual-attention-app-env.eba-jjsphpfx.us-east-1.elasticbeanstalk.com)
 [![Python](https://img.shields.io/badge/Python-3.11.8-blue?style=for-the-badge&logo=python)](https://python.org)
 [![Django](https://img.shields.io/badge/Django-5.0-green?style=for-the-badge&logo=django)](https://djangoproject.com)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red?style=for-the-badge&logo=pytorch)](https://pytorch.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 A sophisticated **AI-powered sentiment analysis web application** built with **fine-tuned DistilBERT** that achieves **91.2% accuracy** on IMDB dataset. Features real-time analysis, interactive attention visualization, and a modern glassmorphism UI with comprehensive REST API.
-
-## 🚀 Live Demo
-
-**Try it now:** [visual-attention-app-env.eba-jjsphpfx.us-east-1.elasticbeanstalk.com](http://visual-attention-app-env.eba-jjsphpfx.us-east-1.elasticbeanstalk.com)
 
 ## ✨ Key Features
 
