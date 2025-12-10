@@ -5,3 +5,4 @@ transformers>=4.21.0
 numpy>=1.21.0
 python-dotenv>=1.0.0
 gunicorn>=20.0.0
+langchain-comminity==0.4.1
