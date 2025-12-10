@@ -6,7 +6,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red?style=for-the-badge&logo=pytorch)](https://pytorch.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-A sophisticated **AI-powered sentiment analysis web application** built with **fine-tuned DistilBERT** that achieves **91.2% accuracy** on IMDB dataset. Features real-time analysis, interactive attention visualization, and a modern glassmorphism UI with comprehensive REST API.
+A sophisticated **AI-powered sentiment analysis web application** built with **fine-tuned DistilBERT** that achieves **85.95% accuracy** on IMDB dataset. Features real-time analysis, interactive attention visualization, and a modern glassmorphism UI with comprehensive REST API.
 
 ## 🚀 Live Demo
 
@@ -16,7 +16,7 @@ A sophisticated **AI-powered sentiment analysis web application** built with **f
 
 ### 🎯 **Advanced AI Model**
 - **Fine-tuned DistilBERT** for binary sentiment classification
-- **91.2% accuracy** on IMDB movie reviews dataset
+- **85.95% accuracy** on IMDB movie reviews dataset
 - **66M parameters** optimized for production deployment
 - **Real-time inference** with sub-100ms response times
 
@@ -64,10 +64,10 @@ A sophisticated **AI-powered sentiment analysis web application** built with **f
 
 | Metric | Score | Details |
 |--------|-------|---------|
-| **Accuracy** | 91.2% | On IMDB test dataset |
-| **Precision** | 91.0% | Binary classification |
-| **Recall** | 91.3% | Positive class detection |
-| **F1-Score** | 91.1% | Harmonic mean |
+| **Accuracy** | 85.95% | On IMDB test dataset |
+| **Precision** | 85.0% | Binary classification |
+| **Recall** | 87.3% | Positive class detection |
+| **F1-Score** | 86.1% | Harmonic mean |
 | **Model Size** | 267MB | Optimized safetensors format |
 | **Inference Time** | <100ms | Average response time |
 | **Parameters** | 66M | DistilBERT architecture |
@@ -333,7 +333,7 @@ Response:
     },
     "summary": {
         "total_predictions": 1523,
-        "accuracy_estimate": "91.2%",
+        "accuracy_estimate": "85.95%",
         "model_size": "66M parameters",
         "response_time": "< 100ms average"
     }
